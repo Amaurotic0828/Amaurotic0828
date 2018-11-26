@@ -1,0 +1,176 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+import java.util.*;
+/**
+ *
+ * @author M306User
+ */
+public class Calendar5 {
+        public static int DaysPerMonth = 0;
+        public static int WeeksPerQuarter = 0;
+        public static int DaysPerSemiYear = 0;
+        public static int cmpWeeks = 0;
+        public static int firstDayy = 0;
+        public static String[] months = {"",                             
+                    "January", "February", "March",
+                    "April", "May", "June",
+                    "July", "August", "September",
+                    "October", "November", "December"};
+               
+        
+        public static int[] max = {
+                  0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+                };
+
+    public static void main(String[]args){
+        Scanner sc= new Scanner(System.in);
+        System.out.print("Enter a Year: ");
+        int year = sc.nextInt();
+        int days = 0;
+        int yr = year - 1;
+                days = (1+(5*(yr % 4))+(4*(yr%100))+(6*(yr%400)))%7;
+
+       
+
+                for (int M = 1; M <= 12; M++) {
+
+                // check for leap year
+                if  ((((year % 4 == 0) && (year % 100 != 0)) ||  (year % 400 == 0)) && M == 2)
+                    max[M] = 29;
+
+                // print calendar header
+                // Display the month and year
+                System.out.println("          "+ months[M] + " " + year);
+
+                // Display the lines
+                System.out.println("_____________________________________");
+                System.out.println("  Sun  Mon  Tue  Wed  Thu  Fri  Sat");
+
+                int spaces = days;
+                // spaces required
+                   spaces = (max[M-1] + spaces)%7;
+
+                // print the calendar
+                for (int i = 0; i < spaces; i++)
+                    System.out.print("     ");
+                for (int i = 1; i <= max[M]; i++) {
+                    System.out.printf(" %3d ", i);
+                    if (((i + spaces) % 7 == 0) || (i == max[M])) System.out.println();
+                }
+                System.out.println("");
+            }
+                System.out.print("\n1 HOW MANY SPECIFIC DAY ARE THERE IN A SPECIFIC MONTH?" + "\n 1. What is the specific day? ");
+                sc.nextLine();
+                String q1Day = sc.nextLine();
+            
+            System.out.print("2. What is the specific month? ");
+            String q1Month = sc.nextLine();
+            question1(year, q1Day, q1Month);
+            System.out.println("There are " + DaysPerMonth + " " + q1Day + "s on " + q1Month+".");
+            }
+        
+        static void question1(int year, String q1Day, String q1Month) {
+        int q1D = getDay(q1Day);
+        int q1M = getMonth(q1Month);
+
+        int CurrentDayOfWeek = firstDayy;
+        int day = 1;
+        
+        for (int m = 0; m < months.length; m++) {
+            if(CurrentDayOfWeek == 7){
+            	CurrentDayOfWeek = 0;
+            }
+            while (day <= max[m]) {
+                while (CurrentDayOfWeek < max.length && day <= max[m]) {
+                    if (m == q1M && CurrentDayOfWeek == q1D) {
+                       DaysPerMonth++;
+                    }
+                    day++;
+                    CurrentDayOfWeek++;
+                }
+                if (day - 1 != max[m]) {
+                    CurrentDayOfWeek = 0;
+                }
+            }
+            day = 1;
+        }
+        }
+            static int getMonth(String month){
+        int monthNum = 0;
+        switch (month.toLowerCase()) {
+            case "january":
+                monthNum = 0;
+                break;
+            case "february":
+                monthNum = 1;
+                break;
+            case "march":
+                monthNum = 2;
+                break;
+            case "april":
+                monthNum = 3;
+                break;
+            case "may":
+                monthNum = 4;
+                break;
+            case "june":
+                monthNum = 6;
+                break;
+            case "july":
+                break;
+            case "august":
+                monthNum = 4;
+                break;
+            case "september":
+                monthNum = 5;
+                break;
+            case "october":
+                monthNum = 6;
+                break;
+            case "november":
+                break;
+            case "december":
+                monthNum = 4;
+                break;
+            default:
+                System.out.print("Invalid month.");
+                break;
+        }
+        return monthNum;
+    }
+    
+    static int getDay(String day) {
+        int dayNum = 0;
+        switch (day.toLowerCase()) {
+            case "monday":
+                dayNum = 1;
+                break;
+            case "tuesday":
+                dayNum = 2;
+                break;
+            case "wednesday":
+                dayNum = 3;
+                break;
+            case "thursday":
+                dayNum = 4;
+                break;
+            case "friday":
+                dayNum = 5;
+                break;
+            case "saturday":
+                dayNum = 6;
+                break;
+            case "sunday":
+                break;
+            default:
+                System.out.print("Invalid day.");
+                break;
+        }
+        return dayNum;
+    }
+}
+        
+        
